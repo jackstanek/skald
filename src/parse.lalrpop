@@ -1,0 +1,13 @@
+use std::str::FromStr;
+use crate::ast::Expr;
+
+grammar;
+
+// Parse expressions.
+pub Expr: Expr = {
+    <i:Int> => i
+}
+
+Int: Expr = {
+    <n:r"[0-9]+#*"> => Expr::IntExpr(i64::from_str(n).unwrap())
+}
