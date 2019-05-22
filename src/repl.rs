@@ -13,9 +13,11 @@ pub fn repl(default_prompt: &str) {
         let readline = rl.readline(default_prompt);
         match readline {
             Ok(line) => {
-                match parser.parse(line.as_str()) {
-                    Ok(expr) => println!("{}", expr),
-                    Err(err) => println!("Parse error: {:?}", err)
+                if !line.is_empty() {
+                    match parser.parse(line.as_str()) {
+                        Ok(expr) => println!("{}", expr),
+                        Err(err) => println!("Parse error: {:?}", err)
+                    }
                 }
             },
             Err(ReadlineError::Interrupted) => {
