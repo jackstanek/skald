@@ -5,6 +5,8 @@ use std::fmt;
 pub enum Expr {
     IntExpr(i64),
     BoolExpr(bool),
+    StringExpr(String),
+    CharExpr(char)
 }
 
 impl fmt::Display for Expr {
@@ -15,6 +17,12 @@ impl fmt::Display for Expr {
             },
             Expr::BoolExpr(b) => {
                 write!(f, "{}", if *b { "#t" } else { "#f" })
+            },
+            Expr::StringExpr(s) => {
+                write!(f, r#""{}""#, s)
+            },
+            Expr::CharExpr(c) => {
+                write!(f, "#\\{}", c)
             }
         }
     }

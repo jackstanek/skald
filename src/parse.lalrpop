@@ -5,16 +5,18 @@ grammar;
 
 // Parse expressions.
 pub Expr: Expr = {
-    <l:Literal> => l,
+    Literal,
 }
 
 Literal: Expr = {
-    <n:Number> => n,
-    <b:r"(#t|#f)"> => Expr::BoolExpr(b == "#t")
+    Number,
+    r"(#t|#f)" => Expr::BoolExpr(<> == "#t"),
+    <s:r#""[^"]*""#> => Expr::StringExpr(s[1..(s.len() - 1)].to_string()),
+    r"#\\." => Expr::CharExpr(<>.chars().nth(2).unwrap())
 }
 
 Number: Expr = {
-    <i:DecInt> => i
+    DecInt
 }
 
 // TODO: need to add other bases, other prefixes
