@@ -12,7 +12,13 @@ Literal: Expr = {
     Number,
     r"(#t|#f)" => Expr::BoolExpr(<> == "#t"),
     <s:r#""[^"]*""#> => Expr::StringExpr(s[1..(s.len() - 1)].to_string()),
-    r"#\\." => Expr::CharExpr(<>.chars().nth(2).unwrap())
+    Character,
+}
+
+Character: Expr = {
+    r"#\\." => Expr::CharExpr(<>.chars().nth(2).unwrap()),
+    r"#\\space" => Expr::CharExpr(' '),
+    r"#\\newline" => Expr::CharExpr('\n'),
 }
 
 Number: Expr = {

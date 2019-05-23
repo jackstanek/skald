@@ -21,6 +21,12 @@ impl fmt::Display for Expr {
             Expr::StringExpr(s) => {
                 write!(f, r#""{}""#, s)
             },
+            Expr::CharExpr(' ') => {
+                write!(f, "#\\{}", "space")
+            }
+            Expr::CharExpr('\n') => {
+                write!(f, "#\\{}", "newline")
+            }
             Expr::CharExpr(c) => {
                 write!(f, "#\\{}", c)
             }
