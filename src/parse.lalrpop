@@ -5,9 +5,19 @@ grammar;
 
 // Parse expressions.
 pub Expr: Expr = {
-    <i:Int> => i
+    <l:Literal> => l,
 }
 
-Int: Expr = {
-    <n:r"[0-9]+#*"> => Expr::IntExpr(i64::from_str(n).unwrap())
+Literal: Expr = {
+    <n:Number> => n,
+    <b:r"(#t|#f)"> => Expr::BoolExpr(b == "#t")
+}
+
+Number: Expr = {
+    <i:DecInt> => i
+}
+
+// TODO: need to add other bases, other prefixes
+DecInt: Expr = {
+    <v:r"[0-9]+"> => Expr::IntExpr(i64::from_str(v).unwrap())
 }

@@ -3,7 +3,8 @@
 use std::fmt;
 
 pub enum Expr {
-    IntExpr(i64)
+    IntExpr(i64),
+    BoolExpr(bool),
 }
 
 impl fmt::Display for Expr {
@@ -11,6 +12,9 @@ impl fmt::Display for Expr {
         match self {
             Expr::IntExpr(v) => {
                 write!(f, "{}", v)
+            },
+            Expr::BoolExpr(b) => {
+                write!(f, "{}", if *b { "#t" } else { "#f" })
             }
         }
     }
