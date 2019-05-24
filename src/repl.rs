@@ -15,7 +15,7 @@ pub fn repl(default_prompt: &str) {
             Ok(line) => {
                 if !line.is_empty() {
                     match parser.parse(line.as_str()) {
-                        Ok(expr) => println!("{}", expr),
+                        Ok(expr) => println!("=> {}", expr),
                         Err(err) => println!("Parse error: {:?}", err)
                     }
                 }
