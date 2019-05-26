@@ -7,15 +7,17 @@ use crate::parse;
 
 pub fn repl(default_prompt: &str) {
     let mut rl = Editor::<()>::new();
-    let parser = parse::ExprParser::new();
 
     loop {
         let readline = rl.readline(default_prompt);
         match readline {
             Ok(line) => {
                 if !line.is_empty() {
-                    match parser.parse(line.as_str()) {
-                        Ok(expr) => println!("=> {}", expr),
+                    match parse::parse_input(&line) {
+                        /* TODO: eval all expressions */
+                        Ok(exprs) => for expr in exprs {
+                            println!("=> {}", expr)
+                        },
                         Err(err) => println!("Parse error: {:?}", err)
                     }
                 }
